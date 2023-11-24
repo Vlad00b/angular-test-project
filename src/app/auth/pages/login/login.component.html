@@ -1,0 +1,17 @@
+<div class="page-wrapper">
+    <div class="auth-container">
+        <h1 class="title">{{text.login}}</h1>
+        <form (ngSubmit)="signIn()" [formGroup]="loginForm">
+            <mat-form-field>
+                <mat-label>{{text.username}}</mat-label>
+                <input matInput type="text" formControlName="username">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{text.password}}</mat-label>
+                <input matInput formControlName="password" type="password" [minLength]="constants.minPasswordLength">
+            </mat-form-field>
+            <button class="auth-btn" mat-flat-button type="submit">{{text.login}}</button>
+        </form>
+        <p class="auth-tip">{{text.dontHaveAccount}} <span [routerLink]="['..', routesNames.auth.registration]">{{text.register}}</span></p>
+    </div>
+</div>

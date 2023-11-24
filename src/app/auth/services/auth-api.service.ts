@@ -1,0 +1,52 @@
+import {Injectable} from '@angular/core';
+import {StorageService} from "../../shared/services/storage.service";
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {ROUTES_NAMES} from "../../shared/constants/routes-names.constant";
+import {catchError, map, Observable, throwError} from "rxjs";
+import {AuthForm, AuthResponse} from "../types/auth.type";
+import {ApiResponse} from "../../shared/types/api-response.type";
+import {API_URL} from "../../shared/constants/api-url.constant";
+import {ToastService} from "../../shared/services/toast.service";
+import {StorageKeys} from "../../shared/enums/storage-keys.enum";
+import {APP_TEXT} from "../../shared/constants/text.constant";
+
+@Injectable({
+    providedIn: 'root'
+})
+export class AuthApiService {
+
+    constructor(
+        private storageService: StorageService,
+        private http: HttpClient,
+        private toastService: ToastService,
+        private router: Router
+    ) {
+    }
+
+    public signIn(payload: Partial<Record<keyof AuthForm, string>>): Observable<AuthResponse> {
+        return this.http.post<ApiResponse<AuthResponse>>(API_URL.auth.login, payload)
+            .pipe(
+                map((res) => {
+                    if (res.success && res.data) {
+                        this.toastService.showSuccessToast(APP_TEXT.authorizationSuccess);
+                        this.storageService.setToStorage(StorageKeys.token, res.data.token);
+                        this.storageService.setToStorage(StorageKeys.user, res.data.user);
+                        this.router.navigate(['/', ROUTES_NAMES.main.main]);
+                        return res.data;
+                    }
+                    throw new Error()
+                }),
+                catchError((err) => {
+                    console.log(err);
+                    this.toastService.showErrorToast(err.error?.message || err.message);
+                    return throwError(() => err);
+                })
+            )
+    }
+
+    public signOut(): void {
+        this.storageService.clearStorage();
+        this.router.navigate(['/', ROUTES_NAMES.auth.auth], {replaceUrl: true});
+    }
+}
