@@ -9,7 +9,7 @@ import {ApiResponse} from "../../shared/types/api-response.type";
 import {API_URL} from "../../shared/constants/api-url.constant";
 import {ToastService} from "../../shared/services/toast.service";
 import {StorageKeys} from "../../shared/enums/storage-keys.enum";
-import {APP_TEXT} from "../../shared/constants/text.constant";
+import {APP_TEXT, ERROR_MESSAGES} from "../../shared/constants/text.constant";
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +24,7 @@ export class AuthApiService {
     ) {
     }
 
-    public signIn(payload: Partial<Record<keyof AuthForm, string>>): Observable<AuthResponse> {
+    public signIn(payload: Record<keyof AuthForm, string>): Observable<AuthResponse> {
         return this.http.post<ApiResponse<AuthResponse>>(API_URL.auth.login, payload)
             .pipe(
                 map((res) => {
@@ -32,10 +32,31 @@ export class AuthApiService {
                         this.toastService.showSuccessToast(APP_TEXT.authorizationSuccess);
                         this.storageService.setToStorage(StorageKeys.token, res.data.token);
                         this.storageService.setToStorage(StorageKeys.user, res.data.user);
-                        this.router.navigate(['/', ROUTES_NAMES.main.main]);
+                        this.router.navigate(['/', ROUTES_NAMES.main.main], {replaceUrl: true});
                         return res.data;
                     }
-                    throw new Error()
+                    throw new Error(ERROR_MESSAGES.somethingWentWrong)
+                }),
+                catchError((err) => {
+                    console.log(err);
+                    this.toastService.showErrorToast(err.error?.message || err.message);
+                    return throwError(() => err);
+                })
+            )
+    }
+
+    public signUp(payload: Record<keyof AuthForm, string>): Observable<AuthResponse> {
+        return this.http.post<ApiResponse<AuthResponse>>(API_URL.auth.signUp, payload)
+            .pipe(
+                map((res) => {
+                    if (res.success && res.data) {
+                        this.toastService.showSuccessToast(APP_TEXT.registrationSuccess);
+                        this.storageService.setToStorage(StorageKeys.token, res.data.token);
+                        this.storageService.setToStorage(StorageKeys.user, res.data.user);
+                        this.router.navigate(['/', ROUTES_NAMES.main.main], {replaceUrl: true});
+                        return res.data;
+                    }
+                    throw new Error(ERROR_MESSAGES.somethingWentWrong)
                 }),
                 catchError((err) => {
                     console.log(err);

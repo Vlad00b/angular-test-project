@@ -1,4 +1,4 @@
-import {ApplicationConfig} from '@angular/core';
+import {ApplicationConfig, importProvidersFrom} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {APP_ROUTES} from './app.routes';
@@ -7,12 +7,14 @@ import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {MainInterceptor} from "./shared/interceptors/main.interceptor";
 import {ErrorInterceptor} from "./shared/interceptors/error.interceptor";
 import {provideToastr} from "ngx-toastr";
+import {MatDialogModule} from "@angular/material/dialog";
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(APP_ROUTES),
         provideAnimations(),
         provideToastr(),
-        provideHttpClient(withInterceptors([MainInterceptor, ErrorInterceptor]))
+        provideHttpClient(withInterceptors([MainInterceptor, ErrorInterceptor])),
+        importProvidersFrom(MatDialogModule)
     ]
 };

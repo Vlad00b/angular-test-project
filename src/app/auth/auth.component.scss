@@ -1,0 +1,51 @@
+.page-wrapper {
+  background: linear-gradient(0deg, #9142ba, #70aba9);
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 320px;
+  margin: 0 auto;
+  position: relative;
+  top: 20%;
+
+  &__title {
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 50px;
+    color: #ffffff;
+    filter: drop-shadow(0px 2px 4px #ff6b9c);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  .auth-btn {
+    height: 42px;
+    margin-top: 26px;
+  }
+
+  .auth-tip {
+    margin-top: 20px;
+    color: #f0f0f0;
+    font-size: 14px;
+    font-weight: 400;
+
+    span {
+      color: #ffffff;
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        color: #fcccf0;
+      }
+    }
+  }
+}

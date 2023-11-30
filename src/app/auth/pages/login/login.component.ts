@@ -13,7 +13,7 @@ import {RouterLink} from "@angular/router";
     standalone: true,
     imports: [CommonModule, MatInputModule, MatButtonModule, FormsModule, ReactiveFormsModule, RouterLink],
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['../../auth.component.scss', './login.component.scss']
 })
 export default class LoginComponent extends ConstantHelper implements OnInit {
 
@@ -35,7 +35,7 @@ export default class LoginComponent extends ConstantHelper implements OnInit {
 
     public signIn(): void {
         if (this.loginForm.valid) {
-            this.authApiService.signIn(this.loginForm.value).subscribe();
+            this.authApiService.signIn(this.loginForm.getRawValue()).subscribe();
         }
     }
 

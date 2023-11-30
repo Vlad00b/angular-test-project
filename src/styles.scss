@@ -12,51 +12,51 @@ body {
 .page-wrapper {
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg, #9142ba, #70aba9);
+  min-width: 460px;
+}
 
-  h1.title {
-    font-size: 36px;
-    font-weight: 500;
-    line-height: 50px;
-    color: #ffffff;
-    filter: drop-shadow(0px 2px 4px #ff6b9c);
+.header {
+  &__button {
+    font-size: 16px;
+    &:first-child {
+      margin-right: 20px;
+    }
   }
 }
 
-.auth-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 320px;
-  margin: 0 auto;
-  position: relative;
-  top: 20%;
-  form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 50px;
-  }
+.item-container {
+  width: 50%;
+  max-width: 700px;
+  min-width: 460px;
+  margin: 5% auto;
 
-  .auth-btn {
-    height: 42px;
-    margin-top: 26px;
+  &__title {
+    text-align: center;
   }
+}
 
-  .auth-tip {
-    margin-top: 20px;
-    color: #f0f0f0;
-    font-size: 14px;
-    font-weight: 400;
-    span {
-      color: #ffffff;
-      text-decoration: underline;
-      cursor: pointer;
-      &:hover {
-        color: #fdf1f6;
-        filter: drop-shadow(0px 1px 10px #ffffff);
-      }
+.mat-mdc-unelevated-button.item-btn {
+  background: #ffffff;
+
+  &:hover {
+    background: #d6d6d6;
+  }
+}
+
+.item-table-wrapper {
+  table {
+    margin-top: 40px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    tr {
+      text-align-last: center;
+    }
+
+    .action-buttons {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-around;
     }
   }
 }

@@ -1,1 +1,36 @@
-<p>item-statistic works!</p>
+<div class="page-wrapper">
+    <mat-toolbar color="primary" class="header">
+        <button mat-button class="header__button" [routerLink]="['/', routesNames.main.main, routesNames.main.items]">{{text.items}}</button>
+        <button mat-button class="header__button"
+                [routerLink]="['/', routesNames.main.main, routesNames.main.items, routesNames.main.statistics]">{{text.statistic}}</button>
+    </mat-toolbar>
+    <div class="item-container">
+        <h1 class="item-container__title">{{text.statistic}}</h1>
+        <div class="item-table-wrapper" *ngIf="itemStatistic.data && itemStatistic.data.length; else noItems">
+            <table mat-table [dataSource]="itemStatistic">
+                <ng-container [matColumnDef]="tableColumns[0]">
+                    <th mat-header-cell *matHeaderCellDef>{{text.itemType}}</th>
+                    <td mat-cell *matCellDef="let item">{{item.type}}</td>
+                </ng-container>
+
+                <ng-container [matColumnDef]="tableColumns[1]">
+                    <th mat-header-cell *matHeaderCellDef>{{text.count}}</th>
+                    <td mat-cell *matCellDef="let item">{{item.count}}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: tableColumns"></tr>
+            </table>
+            <mat-paginator
+                #paginator
+                [length]="itemStatisticTotal"
+                [pageSize]="constants.itemsStatisticLimit"
+                [hidePageSize]="true"
+                (page)="loadMoreItemStatistic($event)"
+            ></mat-paginator>
+        </div>
+        <ng-template #noItems>
+            <p>No items</p>
+        </ng-template>
+    </div>
+</div>

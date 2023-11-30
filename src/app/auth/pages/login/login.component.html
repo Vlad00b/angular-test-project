@@ -1,6 +1,6 @@
 <div class="page-wrapper">
     <div class="auth-container">
-        <h1 class="title">{{text.login}}</h1>
+        <h1 class="auth-container__title">{{text.login}}</h1>
         <form (ngSubmit)="signIn()" [formGroup]="loginForm">
             <mat-form-field>
                 <mat-label>{{text.username}}</mat-label>
@@ -12,6 +12,6 @@
             </mat-form-field>
             <button class="auth-btn" mat-flat-button type="submit">{{text.login}}</button>
         </form>
-        <p class="auth-tip">{{text.dontHaveAccount}} <span [routerLink]="['..', routesNames.auth.registration]">{{text.register}}</span></p>
+        <p class="auth-tip">{{text.dontHaveAccount}} <span [routerLink]="['..', routesNames.auth.registration]">{{text.registration}}</span></p>
     </div>
 </div>
