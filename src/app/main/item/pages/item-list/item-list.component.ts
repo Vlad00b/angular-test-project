@@ -77,7 +77,7 @@ export default class ItemListComponent extends ConstantHelper implements OnInit 
             .subscribe((newItem) => {
                 if (newItem) {
                     this.itemList.data = this.itemList.data.map((el) => {
-                        if (el._id === newItem._id) {
+                        if (el.id === newItem.id) {
                             return newItem;
                         }
                         return el;
@@ -87,7 +87,7 @@ export default class ItemListComponent extends ConstantHelper implements OnInit 
     }
 
     public deleteItem(item: Item): void {
-        this.itemService.deleteItemById(item._id)
+        this.itemService.deleteItemById(item.id)
             .subscribe((res) => {
                 if (res) {
                     this.getItemsList((this.matPaginator?.pageIndex || 0) + 1)

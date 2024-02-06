@@ -3,7 +3,7 @@ import {StorageService} from "../../shared/services/storage.service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {ROUTES_NAMES} from "../../shared/constants/routes-names.constant";
-import {catchError, map, Observable, throwError} from "rxjs";
+import {map, Observable} from "rxjs";
 import {AuthForm, AuthResponse} from "../types/auth.type";
 import {ApiResponse} from "../../shared/types/api-response.type";
 import {API_URL} from "../../shared/constants/api-url.constant";
@@ -35,12 +35,8 @@ export class AuthApiService {
                         this.router.navigate(['/', ROUTES_NAMES.main.main], {replaceUrl: true});
                         return res.data;
                     }
-                    throw new Error(ERROR_MESSAGES.somethingWentWrong)
-                }),
-                catchError((err) => {
-                    console.log(err);
-                    this.toastService.showErrorToast(err.error?.message || err.message);
-                    return throwError(() => err);
+                    this.toastService.showErrorToast(ERROR_MESSAGES.somethingWentWrong);
+                    throw new Error(ERROR_MESSAGES.somethingWentWrong);
                 })
             )
     }
@@ -56,12 +52,8 @@ export class AuthApiService {
                         this.router.navigate(['/', ROUTES_NAMES.main.main], {replaceUrl: true});
                         return res.data;
                     }
+                    this.toastService.showErrorToast(ERROR_MESSAGES.somethingWentWrong);
                     throw new Error(ERROR_MESSAGES.somethingWentWrong)
-                }),
-                catchError((err) => {
-                    console.log(err);
-                    this.toastService.showErrorToast(err.error?.message || err.message);
-                    return throwError(() => err);
                 })
             )
     }

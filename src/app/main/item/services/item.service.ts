@@ -21,9 +21,8 @@ export class ItemService {
         return this.popupService.showCustomPopup<EditItemPopupComponent, Item, Pick<Item, 'name' | 'type'>>(EditItemPopupComponent, item)
             .pipe(
                 concatMap((newItem) => {
-                    console.log(newItem);
                     if (newItem) {
-                        return this.api.editItem(item._id, newItem)
+                        return this.api.editItem(item.id, newItem)
                             .pipe(catchError(() => [null]));
                     }
                     return [null];

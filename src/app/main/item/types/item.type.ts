@@ -6,10 +6,11 @@ export type AddItemForm = {
 }
 
 export type Item = {
-    _id: string;
+    id: string;
     name: string;
     type: string;
     createdAt: Date;
+    updatedAt: Date;
 }
 
 export type ItemStatistic = {
